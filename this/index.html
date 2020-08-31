@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reactを知る</title>
+</head>
+<body>
+ <button id='btn'> ボタン </button>
+ <button id='btn2'> ボタン２ </button>
+  
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script>
+  $('#btn').on('click',function(){
+    alert('test')
+    console.log(this) // <button id='btn'>ボタン</button>
+  })
+  $('#btn2').on('click',() =>{
+    console.log('arrow' + this)
+  })
+  var dragon = {
+      level : 1,      
+      talk : function(){
+        console.log(this)
+        console.log('i am level:' + this.level)
+      },
+      talk2 : () => {
+        console.log(this)
+        console.log('i am level:' + this.level)
+      },
+      talk3: function(){
+        setTimeout(function(){
+          console.log('settimeout' + this)
+          console.log('i am level:' + this.level)
+        })
+        setTimeout(() => {
+          console.log('settimeout : arrow : ' + this)
+          console.log('i am level:' + this.level)
+          var b = function(){
+            console.log(this) // window
+          }
+          b()
+        })
+      },
+      talk4 : () =>{
+        var a = function(){
+          console.log(this)
+        }
+        a()
+      },
+      child: {
+          level : 0,      
+          talk : function(){
+            console.log(this)
+            console.log('i am level:' + this.level)
+          },
+          talk2 : () => {
+            console.log(this)
+            console.log('i am level:' + this.level)
+          },
+          talk4 : () =>{
+            var a = function(){
+              console.log("arrow" + this)
+              console.log("arrow" + this.level)
+            }
+            a()
+          }
+      }
+  }
+
+  dragon.talk() // i am level:1
+  dragon.talk2() //i am level:undefined
+  dragon.talk3() //i am level:undefined arrow: i am level:1
+  dragon.talk4() // window
+  dragon.child.talk4() // window
+
+  var talk3 = dragon.talk3
+  talk3() // i am level:undefined arrow: i am level:undefined
+
+  dragon.child.talk() //i am level:0
+  // 入れ子であろうが関係なくwindowを指す
+  dragon.child.talk2() //i am level:undefined
+
+  var talk =  dragon.talk
+  var talk2 =  dragon.talk2.bind(dragon)
+  var talk_2 =  dragon.talk.bind(dragon)
+  talk() //i am level:undefined
+  talk2() //i am level:undefined
+  talk_2() //i am level:1
+
+  var f = () => { 'use strict'; return this; };
+  var f2 = () => { return this; };
+  console.log(f())
+  //アロー関数式は非メソッド型の関数に最もよく合っています。
+  //https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+
+  //https://jsprimer.net/basic/function-this/
+  //JavaScriptではオブジェクトのプロパティが関数である場合にそれをメソッドと呼びます。
+  // 短縮記法で定義したメソッド
+
+  
+  console.log(f2())
+
+</script>
+</html>

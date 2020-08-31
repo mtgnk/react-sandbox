@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<script src="https://unpkg.com/react/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<body>
+  <h1>Reactを知る</h1>
+  <span></span>
+  <div id="app-no-babel"></div>  
+  <div id="app-jsx"></div>  
+</body>
+<script>
+// var $ = function(id){
+//   return document.getElementById(id)
+// } 
+var $ = document.getElementById.bind(document)
+var $root = $('root1')
+var h = React.createElement('div',null,'helloworld')
+// const element = React.createElement(
+//   'h1',
+//   {className: 'greeting'},
+//   'Hello, world!'
+// );
+// Note: this structure is simplified
+
+// const element = {
+//   type: 'h1',
+//   props: {
+//     className: 'greeting',
+//     children: 'Hello, world!'
+//   }
+// };
+
+ReactDOM.render(h,$root)
+</script>
+<script type="text/babel">
+
+ReactDOM.render(
+  <h1>Hello, world!</h1>,
+  document.getElementById('root2')
+);
+
+</script>
+</html>
